@@ -7,18 +7,17 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('coba', 'Home::coba');
-// Home Barang
-$routes->get('barang', 'Barang::index');
+// Home Mahasiswa
+$routes->get('Mahasiswa', 'Mahasiswa::index');
 // Halaman Tambah
-$routes->get('barang/tambah', 'Barang::tambah');
+$routes->get('Mahasiswa/tambah', 'Mahasiswa::tambah');
 // Halaman Edit
-$routes->get('barang/edit/(:any)', 'Barang::edit/$1');
+$routes->get('Mahasiswa/edit/(:any)', 'Mahasiswa::edit/$1');
 // Proses CRUD
 // Insert
-$routes->post('barang/add', 'Barang::add');
+$routes->post('Mahasiswa/add', 'Mahasiswa::add');
 // Update
-$routes->post('barang/update', 'Barang::update');
+$routes->post('baraMahasiswang/update', 'Mahasiswa::update');
 // Hapus
-$routes->get('barang/hapus/(:any)', 'Barang::hapus/$1');
+$routes->get('Mahasiswa/hapus/(:any)', 'Mahasiswa::hapus/$1');
 $routes->setAutoRoute(true);
-             

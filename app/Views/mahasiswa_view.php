@@ -1,3 +1,11 @@
+<style>
+    .center-img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
 <div class="container pt-5">
     <a href="<?= base_url('mahasiswa/tambah'); ?>" class="btn btn-success mb-2">Tambah Data</a>
     <div class="card">
@@ -23,8 +31,8 @@
                                 <td><?= $no++; ?></td>
                                 <td><?= $isi['nim']; ?></td>
                                 <td><?= $isi['nama_mahasiswa']; ?></td>
-                                <td><img src="<?= base_url('uploads/' . $isi['foto_diri']); ?>" alt="Foto Diri" width="100"></td>
-                                <td><img src="<?= base_url('uploads/' . $isi['foto_ktp']); ?>" alt="Foto KTP" width="100"></td>
+                                <td><img src="<?= base_url('uploads/' . $isi['foto_diri']); ?>" alt="Foto Diri" class="center-img" style="width: 100px; height: auto;"></td>
+                                <td><img src="<?= base_url('uploads/' . $isi['foto_ktp']); ?>" alt="Foto KTP" class="center-img" style="width: 200px; height: auto;"></td>
                                 <td>
                                     <a href="<?= base_url('mahasiswa/edit/' . $isi['id_mahasiswa']); ?>" class="btn btn-success">Edit</a>
                                     <a href="<?= base_url('mahasiswa/hapus/' . $isi['id_mahasiswa']); ?>" 

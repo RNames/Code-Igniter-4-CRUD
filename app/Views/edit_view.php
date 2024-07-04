@@ -16,11 +16,11 @@
                 </div>
                 <div class="form-group">
                     <label for="">Foto Diri</label>
-                    <input type="file" name="foto_diri" class="form-control">
+                    <input type="file" name="foto_diri" accept="/image*" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="">Foto KTP</label>
-                    <input type="file" name="foto_ktp" class="form-control">
+                    <input type="file" name="foto_ktp" accept="/image*" class="form-control">
                 </div>
                 <input type="hidden" value="<?= $mahasiswa['id_mahasiswa'];?>" name="id_mahasiswa">
                 <button class="btn btn-success">Edit Data</button>

@@ -16,11 +16,11 @@
                 </div>
                 <div class="form-group">
                     <label for="foto_diri">Foto Diri</label>
-                    <input type="file" name="foto_diri" required class="form-control">
+                    <input type="file" name="foto_diri" accept="image/*" required class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="foto_ktp">Foto KTP</label>
-                    <input type="file" name="foto_ktp" required class="form-control">
+                    <input type="file" name="foto_ktp" accept="image/*" required class="form-control">
                 </div>
                 <button class="btn btn-success">Tambah Data</button>
             </form>

@@ -48,10 +48,9 @@ class Mahasiswa extends Controller
         }
 
         $model->saveMahasiswa($data);
-        echo '<script>
-                alert("Sukses Tambah Data Mahasiswa");
-                window.location="' . base_url('mahasiswa') . '"
-            </script>';
+        $session = session();
+        $session->setFlashdata('message', 'Sukses Tambah Data Mahasiswa');
+        return redirect()->to(base_url('mahasiswa'));
     }
 
     public function edit($id)
@@ -66,10 +65,9 @@ class Mahasiswa extends Controller
             echo view('edit_view', $data);
             echo view('footer_view', $data);
         } else {
-            echo '<script>
-                    alert("ID mahasiswa ' . $id . ' Tidak ditemukan");
-                    window.location="' . base_url('mahasiswa') . '"
-                </script>';
+            $session = session();
+            $session->setFlashdata('message', 'ID mahasiswa ' . $id . ' Tidak ditemukan');
+            return redirect()->to(base_url('mahasiswa'));
         }
     }
 
@@ -100,10 +98,9 @@ class Mahasiswa extends Controller
         }
 
         $model->editMahasiswa($data, $id);
-        echo '<script>
-                alert("Sukses Edit Data Mahasiswa");
-                window.location="' . base_url('mahasiswa') . '"
-            </script>';
+        $session = session();
+        $session->setFlashdata('message', 'Sukses Edit Data Mahasiswa');
+        return redirect()->to(base_url('mahasiswa'));
     }
 
     public function hapus($id)
@@ -120,15 +117,13 @@ class Mahasiswa extends Controller
             }
 
             $model->hapusMahasiswa($id);
-            echo '<script>
-                    alert("Hapus Data Mahasiswa Sukses");
-                    window.location="' . base_url('mahasiswa') . '"
-                </script>';
+            $session = session();
+            $session->setFlashdata('message', 'Hapus Data Mahasiswa Sukses');
+            return redirect()->to(base_url('mahasiswa'));
         } else {
-            echo '<script>
-                    alert("Hapus Gagal !, ID mahasiswa ' . $id . ' Tidak ditemukan");
-                    window.location="' . base_url('mahasiswa') . '"
-                </script>';
+            $session = session();
+            $session->setFlashdata('message', 'Hapus Gagal !, ID mahasiswa ' . $id . ' Tidak ditemukan');
+            return redirect()->to(base_url('mahasiswa'));
         }
     }
 }

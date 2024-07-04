@@ -5,10 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
-$routes->get('coba', 'Home::coba');
 // Home Mahasiswa
-$routes->get('Mahasiswa', 'Mahasiswa::index');
+$routes->get('/', 'Mahasiswa::index');
 // Halaman Tambah
 $routes->get('Mahasiswa/tambah', 'Mahasiswa::tambah');
 // Halaman Edit

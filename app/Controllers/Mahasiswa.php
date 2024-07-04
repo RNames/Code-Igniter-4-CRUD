@@ -30,28 +30,36 @@ class Mahasiswa extends Controller
             'nim' => $this->request->getPost('nim'),
             'nama_mahasiswa' => $this->request->getPost('nama'),
         ];
-
-        // Handling Foto Diri upload
-        $fotoDiri = $this->request->getFile('foto_diri');
-        if ($fotoDiri && $fotoDiri->isValid()) {
-            $newFotoDiriName = $fotoDiri->getRandomName();
-            $fotoDiri->move('uploads', $newFotoDiriName); // Save to public/uploads
+    
+        // Handling cropped Foto Diri upload
+        $croppedFotoDiri = $this->request->getPost('cropped_foto_diri');
+        if ($croppedFotoDiri) {
+            $croppedFotoDiri = str_replace('data:image/jpeg;base64,', '', $croppedFotoDiri);
+            $croppedFotoDiri = base64_decode($croppedFotoDiri);
+            $newFotoDiriName = uniqid() . '.jpg';
+            file_put_contents('uploads/' . $newFotoDiriName, $croppedFotoDiri);
             $data['foto_diri'] = $newFotoDiriName;
+        } else {
+            echo "cropped_foto_diri not set";
         }
-
-        // Handling Foto KTP upload
-        $fotoKtp = $this->request->getFile('foto_ktp');
-        if ($fotoKtp && $fotoKtp->isValid()) {
-            $newFotoKtpName = $fotoKtp->getRandomName();
-            $fotoKtp->move('uploads', $newFotoKtpName); // Save to public/uploads
+    
+        // Handling cropped Foto KTP upload
+        $croppedFotoKtp = $this->request->getPost('cropped_foto_ktp');
+        if ($croppedFotoKtp) {
+            $croppedFotoKtp = str_replace('data:image/jpeg;base64,', '', $croppedFotoKtp);
+            $croppedFotoKtp = base64_decode($croppedFotoKtp);
+            $newFotoKtpName = uniqid() . '.jpg';
+            file_put_contents('uploads/' . $newFotoKtpName, $croppedFotoKtp);
             $data['foto_ktp'] = $newFotoKtpName;
+        } else {
+            echo "cropped_foto_ktp not set";
         }
-
+    
         $model->saveMahasiswa($data);
-        $session = session();
-        $session->setFlashdata('message', 'Sukses Tambah Data Mahasiswa');
         return redirect()->to(base_url('mahasiswa'));
     }
+    
+
 
     public function edit($id)
     {
@@ -79,27 +87,11 @@ class Mahasiswa extends Controller
         $data = [
             'nim' => $this->request->getPost('nim'),
             'nama_mahasiswa' => $this->request->getPost('nama'),
+            'foto_diri' => $this->request->getPost('croppedFotoDiri'), // Using cropped data
+            'foto_ktp' => $this->request->getPost('croppedFotoKtp'),   // Using cropped data
         ];
 
-        // Handling Foto Diri upload
-        $fotoDiri = $this->request->getFile('foto_diri');
-        if ($fotoDiri && $fotoDiri->isValid()) {
-            $newFotoDiriName = $fotoDiri->getRandomName();
-            $fotoDiri->move('uploads', $newFotoDiriName); // Save to public/uploads
-            $data['foto_diri'] = $newFotoDiriName;
-        }
-
-        // Handling Foto KTP upload
-        $fotoKtp = $this->request->getFile('foto_ktp');
-        if ($fotoKtp && $fotoKtp->isValid()) {
-            $newFotoKtpName = $fotoKtp->getRandomName();
-            $fotoKtp->move('uploads', $newFotoKtpName); // Save to public/uploads
-            $data['foto_ktp'] = $newFotoKtpName;
-        }
-
         $model->editMahasiswa($data, $id);
-        $session = session();
-        $session->setFlashdata('message', 'Sukses Edit Data Mahasiswa');
         return redirect()->to(base_url('mahasiswa'));
     }
 
@@ -108,7 +100,6 @@ class Mahasiswa extends Controller
         $model = new Mahasiswa_model;
         $getMahasiswa = $model->getMahasiswa($id);
         if ($getMahasiswa) {
-            // Delete files if they exist
             if ($getMahasiswa['foto_diri'] && file_exists('uploads/' . $getMahasiswa['foto_diri'])) {
                 unlink('uploads/' . $getMahasiswa['foto_diri']);
             }

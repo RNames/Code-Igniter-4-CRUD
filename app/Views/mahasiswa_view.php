@@ -32,7 +32,7 @@
                                 <td><?= $isi['nim']; ?></td>
                                 <td><?= $isi['nama_mahasiswa']; ?></td>
                                 <td><img src="<?= base_url('uploads/' . $isi['foto_diri']); ?>" alt="Foto Diri" class="center-img" style="width: 100px; height: auto;"></td>
-                                <td><img src="<?= base_url('uploads/' . $isi['foto_ktp']); ?>" alt="Foto KTP" class="center-img" style="width: 200px; height: auto;"></td>
+                                <td><img src="<?= base_url('uploads/' . $isi['foto_ktp']); ?>" alt="Foto KTP" class="center-img" style="width: 150px; height: auto;"></td>
                                 <td>
                                     <a href="<?= base_url('mahasiswa/edit/' . $isi['id_mahasiswa']); ?>" class="btn btn-success">Edit</a>
                                     <a href="<?= base_url('mahasiswa/hapus/' . $isi['id_mahasiswa']); ?>" 

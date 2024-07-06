@@ -34,7 +34,7 @@
 
 <!-- Cropper Modal -->
 <div class="modal fade" id="cropperModal" tabindex="-1" role="dialog" aria-labelledby="cropperModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document"> <!-- Changed modal-lg to modal-xl for extra large size -->
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="cropperModalLabel">Crop Image</h5>
@@ -47,13 +47,13 @@
                     <div class="col-md-6">
                         <h5>Foto Diri</h5>
                         <div>
-                            <img id="cropperFotoDiri" src="#" alt="Foto Diri" style="max-width: 100%; height: 600px;"> <!-- Increased height -->
+                            <img id="cropperFotoDiri" src="#" alt="Foto Diri" style="max-width: 100%; height: 600px;">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <h5>Foto KTP</h5>
                         <div>
-                            <img id="cropperFotoKtp" src="#" alt="Foto KTP" style="max-width: 100%; height: 600px;"> <!-- Increased height -->
+                            <img id="cropperFotoKtp" src="#" alt="Foto KTP" style="max-width: 100%; height: 600px;">
                         </div>
                     </div>
                 </div>
@@ -87,9 +87,15 @@
                     cropBoxResizable: true
                 };
                 if (cropperVarName === 'cropperDiri') {
+                    if (cropperDiri) {
+                        cropperDiri.destroy(); // Destroy existing cropper instance
+                    }
                     cropperDiri = new Cropper(document.getElementById('cropperFotoDiri'), cropperOptions);
                     cropperDiri.replace(e.target.result);
                 } else if (cropperVarName === 'cropperKtp') {
+                    if (cropperKtp) {
+                        cropperKtp.destroy(); // Destroy existing cropper instance
+                    }
                     cropperKtp = new Cropper(document.getElementById('cropperFotoKtp'), cropperOptions);
                     cropperKtp.replace(e.target.result);
                 }

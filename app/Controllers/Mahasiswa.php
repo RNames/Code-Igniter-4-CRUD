@@ -1,15 +1,23 @@
 <?php
+
 namespace App\Controllers;
+
 use CodeIgniter\Controller;
-use App\Models\Mahasiswa_model;
+use App\Models\Mahasiswa_model; // Make sure to include your model class
 
 class Mahasiswa extends Controller
 {
+    protected $mahasiswa_model; // Define a property for the model
+
+    public function __construct()
+    {
+        $this->mahasiswa_model = new Mahasiswa_model(); // Load the model in the constructor
+    }
+
     public function index()
     {
-        $model = new Mahasiswa_model;
         $data['title'] = 'Data Mahasiswa';
-        $data['getMahasiswa'] = $model->getMahasiswa();
+        $data['getMahasiswa'] = $this->mahasiswa_model->getMahasiswa(); // Use $this->mahasiswa_model to access model methods
         echo view('header_view', $data);
         echo view('mahasiswa_view', $data);
         echo view('footer_view', $data);
@@ -30,7 +38,7 @@ class Mahasiswa extends Controller
             'nim' => $this->request->getPost('nim'),
             'nama_mahasiswa' => $this->request->getPost('nama'),
         ];
-    
+
         // Handling cropped Foto Diri upload
         $croppedFotoDiri = $this->request->getPost('cropped_foto_diri');
         if ($croppedFotoDiri) {
@@ -42,7 +50,7 @@ class Mahasiswa extends Controller
         } else {
             echo "cropped_foto_diri not set";
         }
-    
+
         // Handling cropped Foto KTP upload
         $croppedFotoKtp = $this->request->getPost('cropped_foto_ktp');
         if ($croppedFotoKtp) {
@@ -54,17 +62,16 @@ class Mahasiswa extends Controller
         } else {
             echo "cropped_foto_ktp not set";
         }
-    
+
         $model->saveMahasiswa($data);
         return redirect()->to(base_url('mahasiswa'));
     }
-    
-
 
     public function edit($id)
     {
         $model = new Mahasiswa_model;
         $getMahasiswa = $model->getMahasiswa($id);
+        
         if ($getMahasiswa) {
             $data['mahasiswa'] = $getMahasiswa;
             $data['title'] = 'Edit ' . $getMahasiswa['nama_mahasiswa'];
@@ -79,21 +86,51 @@ class Mahasiswa extends Controller
         }
     }
 
-    public function update()
+
+ public function update()
     {
-        $model = new Mahasiswa_model();
         $id = $this->request->getPost('id_mahasiswa');
-
+        $nim = $this->request->getPost('nim');
+        $nama = $this->request->getPost('nama');
+        
+        // Existing images
+        $existing_foto_diri = $this->request->getPost('existing_foto_diri');
+        $existing_foto_ktp = $this->request->getPost('existing_foto_ktp');
+        
+        // Cropped images
+        $cropped_foto_diri = $this->request->getPost('cropped_foto_diri');
+        $cropped_foto_ktp = $this->request->getPost('cropped_foto_ktp');
+        
+        // Use new cropped image if provided, otherwise use existing image
+        $foto_diri = $cropped_foto_diri ? $this->save_image($cropped_foto_diri) : $existing_foto_diri;
+        $foto_ktp = $cropped_foto_ktp ? $this->save_image($cropped_foto_ktp) : $existing_foto_ktp;
+        
+        // Update database with new data
         $data = [
-            'nim' => $this->request->getPost('nim'),
-            'nama_mahasiswa' => $this->request->getPost('nama'),
-            'foto_diri' => $this->request->getPost('croppedFotoDiri'), // Using cropped data
-            'foto_ktp' => $this->request->getPost('croppedFotoKtp'),   // Using cropped data
+            'nim' => $nim,
+            'nama_mahasiswa' => $nama,
+            'foto_diri' => $foto_diri,
+            'foto_ktp' => $foto_ktp,
         ];
-
-        $model->editMahasiswa($data, $id);
+        
+        $this->mahasiswa_model->update($id, $data); // Use $this->mahasiswa_model to call model methods
         return redirect()->to(base_url('mahasiswa'));
     }
+
+    // Utility method to save base64 image to file
+    private function save_image($image_data)
+    {
+        // Decode the base64 encoded image
+        $image_parts = explode(";base64,", $image_data);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $file_name = uniqid() . '.jpg';
+        $file = 'uploads/' . $file_name;
+        file_put_contents($file, $image_base64);
+        return $file_name;
+    }
+
 
     public function hapus($id)
     {

@@ -1,104 +1,68 @@
-Berikut adalah contoh README file untuk repositori GitHub dengan project CRUD tabel mahasiswa menggunakan CodeIgniter 4:
+# CodeIgniter 4 Application Starter
 
----
+## What is CodeIgniter?
 
-# CI4_CRUD
+CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
+More information can be found at the [official site](https://codeigniter.com).
 
-Sebuah project sederhana untuk manajemen CRUD (Create, Read, Update, Delete) tabel mahasiswa menggunakan CodeIgniter 4.
+This repository holds a composer-installable app starter.
+It has been built from the
+[development repository](https://github.com/codeigniter4/CodeIgniter4).
 
-## Fitur
+More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
 
-- Menambahkan data mahasiswa
-- Melihat daftar mahasiswa
-- Mengedit data mahasiswa
-- Menghapus data mahasiswa
+You can read the [user guide](https://codeigniter.com/user_guide/)
+corresponding to the latest version of the framework.
 
-## Prasyarat
+## Installation & updates
 
-Pastikan Anda telah menginstal software berikut:
+`composer create-project codeigniter4/appstarter` then `composer update` whenever
+there is a new release of the framework.
 
-- PHP versi 7.4 ke atas
-- Composer
-- Web server seperti Apache atau Nginx
-- Database MySQL/MariaDB
+When updating, check the release notes to see if there are any changes you might need to apply
+to your `app` folder. The affected files can be copied or merged from
+`vendor/codeigniter4/framework/app`.
 
-## Instalasi
+## Setup
 
-Ikuti langkah-langkah di bawah ini untuk menginstal dan menjalankan project ini secara lokal:
+Copy `env` to `.env` and tailor for your app, specifically the baseURL
+and any database settings.
 
-1. **Clone repositori ini**
+## Important Change with index.php
 
-   ```bash
-   git clone https://github.com/Doni354/CI4_CRUD.Mahasiswa
-   cd CI4_CRUD.Mahasiswa
-   ```
+`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
+for better security and separation of components.
 
-2. **Instal dependensi dengan Composer**
+This means that you should configure your web server to "point" to your project's *public* folder, and
+not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
+framework are exposed.
 
-   ```bash
-   composer install
-   ```
+**Please** read the user guide for a better explanation of how CI4 works!
 
-3. **Ubah file `env` menjadi `.env`**
+## Repository Management
 
-   ```bash
-   cp env .env
-   ```
+We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
+We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
+FEATURE REQUESTS.
 
-4. **Konfigurasi basis data**
+This repository is a "distribution" one, built by our release preparation script.
+Problems with it can be raised on our forum, or as issues in the main repository.
 
-   Edit file `.env` dan sesuaikan pengaturan database sesuai dengan konfigurasi lokal Anda:
+## Server Requirements
 
-   ```plaintext
-   database.default.hostname = localhost
-   database.default.database = nama_database
-   database.default.username = nama_user
-   database.default.password = password
-   database.default.DBDriver = MySQLi
-   ```
+PHP version 7.4 or higher is required, with the following extensions installed:
 
-5. **Migrasi basis data**
+- [intl](http://php.net/manual/en/intl.requirements.php)
+- [mbstring](http://php.net/manual/en/mbstring.installation.php)
 
-   Jalankan perintah berikut untuk membuat tabel yang diperlukan dalam basis data:
+> [!WARNING]
+> The end of life date for PHP 7.4 was November 28, 2022.
+> The end of life date for PHP 8.0 was November 26, 2023.
+> If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
+> The end of life date for PHP 8.1 will be November 25, 2024.
 
-   ```bash
-   php spark migrate
-   ```
+Additionally, make sure that the following extensions are enabled in your PHP:
 
-6. **Jalankan server pengembangan**
-
-   ```bash
-   php spark serve
-   ```
-
-   Aplikasi akan berjalan di `http://localhost:8080`
-
-## Penggunaan
-
-### Menambahkan Data Mahasiswa
-
-1. Buka aplikasi di browser: `http://localhost:8080/mahasiswa`
-2. Klik tombol "Tambah Mahasiswa"
-3. Isi form dengan data mahasiswa dan klik "Simpan"
-
-### Melihat Daftar Mahasiswa
-
-1. Buka aplikasi di browser: `http://localhost:8080/mahasiswa`
-2. Daftar mahasiswa akan ditampilkan dalam tabel
-
-### Mengedit Data Mahasiswa
-
-1. Buka aplikasi di browser: `http://localhost:8080/mahasiswa`
-2. Klik tombol "Edit" pada mahasiswa yang ingin diubah
-3. Edit data mahasiswa dan klik "Simpan"
-
-### Menghapus Data Mahasiswa
-
-1. Buka aplikasi di browser: `http://localhost:8080/mahasiswa`
-2. Klik tombol "Hapus" pada mahasiswa yang ingin dihapus
-
-## Kontribusi
-
-Jika Anda ingin berkontribusi pada proyek ini, silakan buat pull request atau buka issue untuk mendiskusikan perubahan yang ingin Anda lakukan.
-
----
+- json (enabled by default - don't turn it off)
+- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
+- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
